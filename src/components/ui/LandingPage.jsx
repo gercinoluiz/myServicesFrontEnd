@@ -3,6 +3,8 @@ import AppBarFooter from "./AppBarFooter";
 import Header from "./Header";
 import { getLocationsByService } from "../../apiCalls/apiCalls";
 
+import { useServiceDialog } from "../context/ServiceDialogContext";
+
 import {
   Grid,
   Card,
@@ -12,21 +14,40 @@ import {
   CardActions,
   Typography,
   makeStyles,
+  List,
 } from "@material-ui/core";
+
+import Dialog from "@material-ui/core/Dialog";
+import Button from "@material-ui/core/Button";
+
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import Slide from "@material-ui/core/Slide";
+import InputBase from "@material-ui/core/InputBase";
+import Paper from "@material-ui/core/Paper";
 
 import DateRange from "@material-ui/icons/DateRange";
 import Room from "@material-ui/icons/Room";
+import CloseIcon from "@material-ui/icons/Close";
 
 import MenuBook from "@material-ui/icons/MenuBook";
 import Info from "@material-ui/icons/Info";
 import EventAvailable from "@material-ui/icons/EventAvailable";
 
 const useStyles = makeStyles((theme) => ({
+  toolBar: {
+    ...theme.mixins.toolBar,
+    height: "4em",
+  },
+
   Card: {
     minWidth: 300,
     maxWidth: 450,
-    marginTop:"1em",
-    
+    marginTop: "1em",
   },
 
   title: {
@@ -50,31 +71,60 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.5em",
   },
 
-  iconInfo:{
+  iconInfo: {
     color: theme.palette.primary.main,
     fontSize: "1.5em",
   },
 
   cardTypography: {
     fontSize: "0.8em",
-    color:""
+    color: "",
   },
   iconsGrid: {
     marginLeft: "1em",
   },
 
+  appBarDialog: {
+    position: "relative",
+  },
+  appBarDialogTitle: {
+    marginLefi: "1em",
+    flex: 1,
+  },
+
+  textBox: {
+    width: "20em",
+    height: "3em",
+  },
 }));
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+//=========================MAIN FUNCION=====================================
 export default function LandScape() {
+  //=====================Variables==========================================
   const classes = useStyles();
+
+  //========================Hooks===========================================
 
   const [locations, setLocations] = useState([]);
 
+  const { openServiceDialog, setOpenServiceDialog } = useServiceDialog();
+
   useEffect(() => {
-    getLocationsByService().then((locations) => {
-      setLocations(locations.data.places);
-    });
+    getLocationsByService()
+      .then((locations) => {
+        setLocations(locations.data.places);
+      })
+      .catch(() => {
+        //FIX: Come back Here
+        return <h1>Erro</h1>;
+      });
   }, []);
+
+  // =================================Components=======================================
 
   const locationsCards = locations.map((location) => {
     return (
@@ -121,6 +171,48 @@ export default function LandScape() {
     );
   });
 
+  const serviceDialog = (
+    <Dialog
+      fullScreen
+      open={openServiceDialog}
+      color="primary"
+      onClose={() => setOpenServiceDialog(false)}
+    >
+      <AppBar>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            onClick={() => setOpenServiceDialog(false)}
+            arial-labe="close"
+          >
+            <CloseIcon />
+          </IconButton>
+          <Paper className={classes.textBox}>
+            <InputBase label="Pesquise o serviço" />
+          </Paper>
+          <Button
+            autoFocus
+            color="inherit"
+            onClick={() => setOpenServiceDialog(false)}
+          >
+            Pesquisar Serviço
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.toolBar} />
+      <Divider />
+      <List>
+        <ListItem button>
+          <ListItemText>RG</ListItemText>
+        </ListItem>
+        <Divider />
+        <ListItem button>
+          <ListItemText>CPF</ListItemText>
+        </ListItem>
+      </List>
+    </Dialog>
+  );
+
   return (
     <div>
       {locationsCards}
@@ -145,6 +237,7 @@ export default function LandScape() {
       voluptas mollitia et nemo ab doloremque ipsum ut saepe esse quidem libero.
       Numquam maxime aliquid voluptates nisi sapiente tenetur rem labore sint
       debitis veritatis, neque eos.
+      {serviceDialog}
     </div>
   );
 }
