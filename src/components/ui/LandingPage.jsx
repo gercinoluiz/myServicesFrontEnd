@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import AppBarFooter from "./AppBarFooter";
 import Header from "./Header";
-import { getLocationsByService } from "../../apiCalls/apiCalls";
+import {
+  getLocationsByService,
+  getAllServices,
+  getAllNearLocations,
+} from "../../apiCalls/apiCalls";
 
 import { useServiceDialog } from "../context/ServiceDialogContext";
 
@@ -110,19 +114,46 @@ export default function LandScape() {
   //========================Hooks===========================================
 
   const [locations, setLocations] = useState([]);
+  const [services, setServices] = useState([]);
+
+  //Context
 
   const { openServiceDialog, setOpenServiceDialog } = useServiceDialog();
 
+  // GET Nearst Location by Service
   useEffect(() => {
-    getLocationsByService()
+    console.log("getAllNearLocations");
+    getAllNearLocations()
       .then((locations) => {
         setLocations(locations.data.places);
       })
       .catch(() => {
         //FIX: Come back Here
-        return <h1>Erro</h1>;
+        return <h1>Error</h1>;
       });
   }, []);
+
+  // GET ALL SERVICES
+
+  useEffect(() => {
+    console.log("getAllServices");
+    getAllServices().then((services) => {
+      setServices(services.data.services);
+    });
+  }, []);
+
+  console.log({ services });
+
+  // ===================================FUNCTION===============================
+
+  const handleSearchLocationByService = (event, serviceId) => {
+    console.log(event);
+    console.log(serviceId);
+
+    getLocationsByService(serviceId).then((response) => {
+      setLocations(response.data.places);
+    });
+  };
 
   // =================================Components=======================================
 
@@ -177,6 +208,7 @@ export default function LandScape() {
       open={openServiceDialog}
       color="primary"
       onClose={() => setOpenServiceDialog(false)}
+      TransitionComponent={Transition}
     >
       <AppBar>
         <Toolbar>
@@ -202,13 +234,26 @@ export default function LandScape() {
       <div className={classes.toolBar} />
       <Divider />
       <List>
-        <ListItem button>
-          <ListItemText>RG</ListItemText>
-        </ListItem>
-        <Divider />
-        <ListItem button>
-          <ListItemText>CPF</ListItemText>
-        </ListItem>
+        {services ? (
+          services.map((service) => {
+            return (
+              <>
+                <ListItem
+                  button
+                  onClick={(e) => {
+                    handleSearchLocationByService(e, service._id);
+                    setOpenServiceDialog(false)
+                  }}
+                >
+                  <ListItemText>{service.name}</ListItemText>
+                </ListItem>
+                <Divider />
+              </>
+            );
+          })
+        ) : (
+          <h1>Waiting</h1>
+        )}
       </List>
     </Dialog>
   );

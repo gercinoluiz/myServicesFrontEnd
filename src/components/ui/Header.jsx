@@ -42,7 +42,6 @@ export default function Header() {
         </Grid>
       </AppBar>
       <div className={classes.toolbar}></div>
-      hasu
     </>
   );
 }

@@ -5,7 +5,6 @@ const serviceDialogContext = React.createContext();
 export default function ServiceDialogProvider({ children }) {
   const [openServiceDialog, setOpenServiceDialog] = useState(false);
 
-  console.log({ openServiceDialog });
   return (
     <serviceDialogContext.Provider
       value={{ openServiceDialog, setOpenServiceDialog }}
