@@ -57,3 +57,32 @@ export const createNewLocation = (location) => {
     body: JSON.stringify(location), // the que fazer essa porra // voce soh consegue transmitir na web em formato string
   }).then((response) => response.json());
 };
+
+export const updateService = (serviceId, newService) => {
+  return fetch(`${API}/services/updateService/${serviceId}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: newService }),
+  }).then((response) => response.json());
+};
+
+export const createService = (name) => {
+  return fetch(`${API}/services/newservice`, {
+    method: "POST",
+
+    headers: {
+      Accept: "application/json",
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({ name }),
+  }).then((response) => response.json());
+};
+
+export const deleteService = (serviceId) => {
+  return fetch(`${API}/services/deleteService/${serviceId}`, {
+    method: "DELETE",
+  }).then((response) => response.json());
+};

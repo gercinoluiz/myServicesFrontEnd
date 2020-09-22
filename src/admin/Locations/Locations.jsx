@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+//*! RESOLVE THE SLOW INPUT THING
+
+import React, { useState, useEffect, useRef } from "react";
 
 //@ MUI Import
-
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
@@ -16,20 +17,26 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Modal from "@material-ui/core/Modal";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
-
+import { useTheme } from "@material-ui/core";
 // import useTheme from "@material-ui/core/styles/makeStyles";
 
 import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
 import Edit from "@material-ui/icons/Edit";
 import Save from "@material-ui/icons/Save";
+import Delete from "@material-ui/icons/Delete";
 
 //@UI
 import { Header, Footer, LandScape } from "../../components/ui";
 
 //@API
-
 import { useAllLocations } from "../../components/context/AllLocationsContext";
-import { createNewLocation, getAllServices } from "../../apiCalls/apiCalls";
+import {
+  createNewLocation,
+  getAllServices,
+  updateService,
+  createService,
+  deleteService,
+} from "../../apiCalls/apiCalls";
 import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,8 +45,7 @@ const useStyles = makeStyles((theme) => ({
   listGrid: {},
 
   formPaper: {
-    width: "80em",
-    height: "40em",
+    padding: "3em",
   },
 
   formGrid: {
@@ -75,9 +81,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Locations() {
+function Locations() {
   // ** @ All Variables
   const classes = useStyles();
+
+  const theme = useTheme();
+
+  const matches = theme.breakpoints.down("lg");
 
   // ** @ All States
 
@@ -104,13 +114,21 @@ export default function Locations() {
     service: "",
   });
 
+  const [newService, setNewService] = useState("");
+
+  const [newSericeModal, setNewServiceModal] = useState(false);
+
+  //** REFS
+
+  const inputServiceRef = useRef(null);
+
   //** Efects
 
   useEffect(() => {
     getAllServices().then((response) => {
       setServices(response);
     });
-  }, []);
+  }, [editService, setEditService, newService, setNewService]);
 
   // ** @ All Funciotn
 
@@ -160,15 +178,20 @@ export default function Locations() {
     setselectedServices(newServices);
   };
 
-  const handleModal = (service) => {
+  const handleModal = (service, serviceId) => {
     setEditService({
       isOpen: !editService.isOpen,
+      serviceId: serviceId,
       service: service,
     });
   };
 
   const handleChangeModalService = (value) => {
     setEditService({ ...editService, service: value });
+  };
+
+  const handleNewService = (value) => {
+    setNewService(value);
   };
 
   // ** @ Render
@@ -185,7 +208,18 @@ export default function Locations() {
                   {service.name}
                 </ListItemText>
                 <ListItemSecondaryAction>
-                  <IconButton onClick={() => handleModal(service.name)}>
+                  <IconButton
+                    onClick={() => {
+                      deleteService(service._id);
+
+                      setNewService(service.name);
+                    }}
+                  >
+                    <Delete />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => handleModal(service.name, service._id)}
+                  >
                     <Edit />
                   </IconButton>
                   <Checkbox
@@ -206,58 +240,61 @@ export default function Locations() {
     </List>
   );
 
-  const listLocations = (
-    <List>
-      {allLocations ? (
-        allLocations.data.places.map((location) => {
-          return (
-            <>
-              {" "}
-              <ListItem
-                selected={selectedIndex === location._id}
-                onClick={(event) => {
-                  handleSelectedItem(event, location._id);
-                  console.log(location);
-                  setLocation({
-                    name: location.name,
-                    services: [],
-                    address: {
-                      street: location.hasOwnProperty("address") //This property checks if there is a property in the due object
-                        ? location.address.street
-                        : "Não cadastrado",
-                      number: location.hasOwnProperty("address.number")
-                        ? location.address.number
-                        : "Não cadastrado",
+  function listLocations() {
+    return (
+      <List>
+        {allLocations ? (
+          allLocations.data.places.map((location, index) => {
+            return (
+              <>
+                {" "}
+                <ListItem
+                  key={index}
+                  selected={selectedIndex === location._id}
+                  onClick={(event) => {
+                    handleSelectedItem(event, location._id);
+                    console.log(location);
+                    setLocation({
+                      name: location.name,
+                      services: [],
+                      address: {
+                        street: location.hasOwnProperty("address") //This property checks if there is a property in the due object
+                          ? location.address.street
+                          : "Não cadastrado",
+                        number: location.hasOwnProperty("address.number")
+                          ? location.address.number
+                          : "Não cadastrado",
 
-                      cep: location.hasOwnProperty("adress.data")
-                        ? location.data.cep
-                        : "Não cadastrado",
-                    },
-                  });
-                }}
-                button
-              >
-                <ListItemText>{location.name}</ListItemText>
-              </ListItem>
-              <Divider />
-            </>
-          );
-        })
-      ) : (
-        <h1>Loading</h1>
-      )}
-      <>
-        <ListItem>
-          <ListItemText>{location.name}</ListItemText>
-        </ListItem>
-      </>
-    </List>
-  );
+                        cep: location.hasOwnProperty("adress.data")
+                          ? location.data.cep
+                          : "Não cadastrado",
+                      },
+                    });
+                  }}
+                  button
+                >
+                  <ListItemText>{location.name}</ListItemText>
+                </ListItem>
+                <Divider />
+              </>
+            );
+          })
+        ) : (
+          <h1>Loading</h1>
+        )}
+        <>
+          <ListItem>
+            <ListItemText>{location.name}</ListItemText>
+          </ListItem>
+        </>
+      </List>
+    );
+  }
 
   const cadForm = (
     <>
       <Paper className={classes.formPaper}>
-        <Grid container direction="row" justify="space-evenly">
+        <Grid container direction={matches ? "row" : "column"}>
           <Grid className={classes.formGrid} item>
             <form className={classes.form}>
               <Grid item container direction="column">
@@ -269,26 +306,12 @@ export default function Locations() {
                   variant="outlined"
                   value={location.name}
                 />
-                CEP :{" "}
-                <TextField
-                  onChange={handleLocationAddress("cep")}
-                  name="cep"
-                  variant="outlined"
-                  value={location.address.cep}
-                />
-                RUA :{" "}
+                Endereço :{" "}
                 <TextField
                   onChange={handleLocationAddress("street")}
                   name="street"
                   variant="outlined"
                   value={location.address.street}
-                />
-                Número :{" "}
-                <TextField
-                  onChange={handleLocationAddress("number")}
-                  name="number"
-                  variant="outlined"
-                  value={location.address.number}
                 />
               </Grid>
 
@@ -314,14 +337,36 @@ export default function Locations() {
                 >
                   Editar
                 </Button>
+
+                <Button
+                  // onClick={() => handleCreateNewLocation()}
+                  style={{
+                    marginTop: "1em",
+                    backgroundColor: "#E8290B",
+                  }}
+                >
+                  Deletar
+                </Button>
               </Grid>
             </form>
           </Grid>
 
           <Grid style={{ marginTop: "2em" }} item>
-            <Grid>
+            <Grid item container direction="column" alignConten="center ">
               <h1>Escolher serviços</h1>
-              <Paper elevation={2}>{listServices}</Paper>
+              <Paper elevation={2}>{listServices} </Paper>
+              <Button
+                onClick={() => {
+                  setNewServiceModal(true);
+                  {
+                    setTimeout(() => {
+                      inputServiceRef.current.focus(); //--> I use this time out because when I clicj the button the input is not rendered yet
+                    }, 100);
+                  }
+                }}
+              >
+                <AddCircleOutline />
+              </Button>
             </Grid>
           </Grid>
         </Grid>
@@ -335,11 +380,40 @@ export default function Locations() {
         <Paper className={classes.modalPaper}>
           <TextField
             value={editService.service}
-            onChange={(event, value) => handleChangeModalService(value)}
+            onChange={(e) => handleChangeModalService(e.target.value)}
             style={{ width: "20em", marginLeft: "2em" }}
           ></TextField>
           <IconButton>
-            <Save />
+            <Save
+              onClick={() => {
+                updateService(editService.serviceId, editService.service);
+                setEditService({ isOpen: false });
+              }}
+            />
+          </IconButton>
+        </Paper>
+      </Modal>
+    );
+  };
+
+  const serviceAddModal = (props) => {
+    return (
+      <Modal open={newSericeModal} onClose={() => setNewServiceModal(false)}>
+        <Paper className={classes.modalPaper}>
+          <TextField
+            onChange={(e) => handleNewService(e.target.value)}
+            style={{ width: "20em", marginLeft: "2em" }}
+            inputRef={inputServiceRef}
+          ></TextField>
+          <IconButton>
+            <Save
+              onClick={() => {
+                createService(newService).then((response) =>
+                  setNewService(...newService)
+                );
+                setNewServiceModal(false);
+              }}
+            />
           </IconButton>
         </Paper>
       </Modal>
@@ -373,16 +447,19 @@ export default function Locations() {
                 <AddCircleOutline />
               </Button>
             </Grid>
-            {listLocations}
+            {listLocations()}
           </Paper>
         </Grid>
 
-        <Grid style={{ marginLeft: "10em" }} item>
+        <Grid style={{ marginLeft: "5em" }} item>
           {cadForm}
         </Grid>
 
         {serviceModal()}
+        {serviceAddModal()}
       </Grid>
     </>
   );
 }
+
+export default Locations;

@@ -9,13 +9,13 @@ import LocationsProvider from "./components/context/AllLocationsContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <LocationsProvider>
+    {/* <LocationsProvider> */}
     <ServiceDialogProvider>
       <ThemeChangeProvider>
         <Routes />
       </ThemeChangeProvider>
     </ServiceDialogProvider>
-    </LocationsProvider>
+    {/* </LocationsProvider> */}
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -155,6 +155,8 @@ export default function LandScape() {
     });
   };
 
+  const handlSearchBar = () => {};
+
   // =================================Components=======================================
 
   const locationsCards = locations.map((location) => {
@@ -165,7 +167,7 @@ export default function LandScape() {
             <CardContent>
               <Typography className={classes.title}>{location.name}</Typography>
               <Typography className={classes.address}>
-                R. Nossa Sra. do Bom Conselho, 65
+                Endereço: {location.address ? location.address.street : "Not found"}
               </Typography>
               <Typography className={classes.distance}>
                 Ditancia: {location.distance.toString().substring(0, 2)} KM
@@ -242,7 +244,7 @@ export default function LandScape() {
                   button
                   onClick={(e) => {
                     handleSearchLocationByService(e, service._id);
-                    setOpenServiceDialog(false)
+                    setOpenServiceDialog(false);
                   }}
                 >
                   <ListItemText>{service.name}</ListItemText>
@@ -261,27 +263,7 @@ export default function LandScape() {
   return (
     <div>
       {locationsCards}
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
-      reprehenderit dicta omnis eum voluptate perspiciatis ex mollitia magnam
-      ullam aut, dolorum minus deleniti odio atque tenetur quas? Possimus ipsum
-      modi ut eligendi sunt soluta itaque deleniti eum quae, repellat velit quis
-      accusantium harum, ullam numquam quaerat ducimus vitae qui? Saepe enim
-      nesciunt earum. Magnam, veritatis id maiores nostrum in nobis. Sit quam
-      explicabo sunt sint esse consequatur unde tenetur, odio alias nihil iste
-      totam, maiores suscipit neque officiis nisi hic, deserunt obcaecati
-      praesentium. Vitae ex voluptatum asperiores, culpa quod rerum assumenda
-      amet eos animi cupiditate corporis at vero sapiente ratione accusamus
-      distinctio, ducimus porro facilis fugiat. Distinctio eligendi, deserunt
-      maiores molestias illum ipsum unde nobis id tempore repellat mollitia fuga
-      sapiente! Odio ducimus illo nisi molestiae, numquam cum nihil inventore,
-      beatae dignissimos nemo esse quisquam, vero tenetur cumque doloremque?
-      Excepturi, ea nulla sint dolore mollitia ad nostrum, incidunt voluptatem,
-      quae ullam consectetur corrupti sapiente debitis odit distinctio
-      doloremque alias possimus. Eius dolorem quis sequi ad aspernatur eaque
-      amet odit accusantium architecto, quas exercitationem consequuntur
-      voluptas mollitia et nemo ab doloremque ipsum ut saepe esse quidem libero.
-      Numquam maxime aliquid voluptates nisi sapiente tenetur rem labore sint
-      debitis veritatis, neque eos.
+
       {serviceDialog}
     </div>
   );
