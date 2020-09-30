@@ -15,12 +15,12 @@ import  Brightness4  from "@material-ui/icons/Brightness4";
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     ...theme.mixins.toolbar,
-    height: "5em",
+    height: "3em",
   },
 
   appBar: {
     backgroundColor: theme.palette.primary.main,
-    height: "5em",
+    height: "3.5em",
   },
 }));
 

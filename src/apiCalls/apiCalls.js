@@ -1,6 +1,7 @@
 import { API } from "../backend";
+import axios from "axios";
 
-export const getAllNearLocations = () => {
+export const getAllNearLocations = (latlng) => {
   return fetch(
     // YOU AWAYS GOTTA GET THE FUCKING FETCH BACK
     `${API}/locations/getlocationsbyservice/-23.6958247, -46.7868246/5f583ac164851548088aed9e`, //TODO: Fix the latitud an longtude
@@ -24,10 +25,10 @@ export const getAllServices = () => {
     .catch((err) => console.log(err));
 };
 
-export const getLocationsByService = (serviceId) => {
+export const getLocationsByService = (serviceId, latlng) => {
   return fetch(
     // YOU AWAYS GOTTA GET THE FUCKING FETCH BACK
-    `${API}/locations/getlocationsbyservice/-23.6958247, -46.7868246/${serviceId}`,
+    `${API}/locations/getlocationsbyservice/${latlng}/${serviceId}`,
     { method: "GET" }
   )
     .then(
@@ -45,7 +46,7 @@ export const getAllLocations = () => {
 };
 
 export const createNewLocation = (location) => {
-  console.log({ location });
+  console.log("API", { location });
 
   return fetch(`${API}/locations/newlocation`, {
     method: "POST",
@@ -55,7 +56,9 @@ export const createNewLocation = (location) => {
     },
 
     body: JSON.stringify(location), // the que fazer essa porra // voce soh consegue transmitir na web em formato string
-  }).then((response) => response.json());
+  })
+    .then((response) => response.json())
+    .catch((error) => console.log(error));
 };
 
 export const updateService = (serviceId, newService) => {
@@ -85,4 +88,25 @@ export const deleteService = (serviceId) => {
   return fetch(`${API}/services/deleteService/${serviceId}`, {
     method: "DELETE",
   }).then((response) => response.json());
+};
+
+export const deleteLocation = (locationId) => {
+  console.log({ locationId });
+  return fetch(`${API}/locations/deleteLocation/${locationId}`, {
+    method: "DELETE",
+  }).then((response) => response.json());
+};
+
+export const updateLocal = async (localId, local) => {
+  console.log(localId, local);
+  try {
+    const updatedLocation = await axios.patch(
+      `${API}/locations/updateLocation/${localId}`,
+      local
+    );
+
+    return updatedLocation;
+  } catch (error) {
+    return error;
+  }
 };

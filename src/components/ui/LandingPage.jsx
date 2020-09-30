@@ -49,9 +49,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   Card: {
-    minWidth: 300,
-    maxWidth: 450,
-    marginTop: "1em",
+    width: "25em",
+    height: "9em",
+    marginTop: "0.5em",
   },
 
   title: {
@@ -68,6 +68,8 @@ const useStyles = makeStyles((theme) => ({
   distance: {
     fontSize: "0.7m",
     fontFamily: "Roboto",
+    marginTop: "1em",
+    fontWeight: "bold",
   },
 
   iconCalendar: {
@@ -116,14 +118,19 @@ export default function LandScape() {
   const [locations, setLocations] = useState([]);
   const [services, setServices] = useState([]);
 
+  //getting location
+  let latlng;
+  navigator.geolocation.getCurrentPosition((position) => {
+    latlng = `${position.coords.latitude}, ${position.coords.longitude}`;
+  });
+
   //Context
 
   const { openServiceDialog, setOpenServiceDialog } = useServiceDialog();
 
   // GET Nearst Location by Service
   useEffect(() => {
-    console.log("getAllNearLocations");
-    getAllNearLocations()
+    getAllNearLocations(latlng)
       .then((locations) => {
         setLocations(locations.data.places);
       })
@@ -136,21 +143,17 @@ export default function LandScape() {
   // GET ALL SERVICES
 
   useEffect(() => {
-    console.log("getAllServices");
     getAllServices().then((services) => {
       setServices(services.data.services);
     });
   }, []);
 
-  console.log({ services });
+  // Get coordinates
 
   // ===================================FUNCTION===============================
 
   const handleSearchLocationByService = (event, serviceId) => {
-    console.log(event);
-    console.log(serviceId);
-
-    getLocationsByService(serviceId).then((response) => {
+    getLocationsByService(serviceId, latlng).then((response) => {
       setLocations(response.data.places);
     });
   };
@@ -167,34 +170,22 @@ export default function LandScape() {
             <CardContent>
               <Typography className={classes.title}>{location.name}</Typography>
               <Typography className={classes.address}>
-                Endereço: {location.address ? location.address.street : "Not found"}
+                {location.address ? location.address.street : "Not found"}
               </Typography>
               <Typography className={classes.distance}>
-                Ditancia: {location.distance.toString().substring(0, 2)} KM
+                Distância: {location.distance.toString().substring(0, 2)} KM
               </Typography>
             </CardContent>
 
             <CardActions>
               <Grid container justify="space-between" alignItems="center">
                 <Grid className={classes.iconsGrid} item>
-                  <Grid item container alignItems="center" direction="column">
-                    <Typography>
-                      <Info className={classes.iconInfo} />
-                    </Typography>
-                    <Typography className={classes.cardTypography}>
-                      MAIS DETALHES
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid className={classes.iconsGrid} item>
-                  <Grid item container alignItems="center" direction="column">
-                    <Typography>
-                      <EventAvailable className={classes.iconCalendar} />
-                    </Typography>
-                    <Typography className={classes.cardTypography}>
-                      Necessita Agendamento
-                    </Typography>
-                  </Grid>
+                  <Grid
+                    item
+                    container
+                    alignItems="center"
+                    direction="column"
+                  ></Grid>
                 </Grid>
               </Grid>
             </CardActions>

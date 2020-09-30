@@ -14,6 +14,8 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Checkbox from "@material-ui/core/Checkbox";
 import Modal from "@material-ui/core/Modal";
 
+import Search from "@material-ui/icons/Search";
+
 import { makeStyles } from "@material-ui/core";
 
 //API CALLS
@@ -23,15 +25,29 @@ import { getAllLocations } from "../../../apiCalls/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   locationsList: {
-    maxWidth: 350,
+    width: 300,
+    backgroundColor: "#f5f5f5",
+  },
+
+  LocationSearchBox: {
+    width: 250,
+    height: 50,
+  },
+  searchBox: {
+    marginRight: 5,
+    marginTop: 10,
+    position: "relative",
   },
 }));
 
-export default function LocationsList() {
+const LocationsList = (props) => {
   const classes = useStyles();
 
   // State
   const [locations, setLocations] = useState();
+  const [filteredLocations, setFilteredLocations] = useState();
+
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   //Effect
   useEffect(() => {
@@ -44,47 +60,89 @@ export default function LocationsList() {
     const filteredArray = locations.data.places.filter((locations) => {
       //the current value
       return locations.name.toUpperCase().startsWith(value.toUpperCase()); // I ways have to return the value I wnat
-    }); // I am using toUpperCase as a turnoround for case
+    }); // I am using toUpperCase as a turnoround for casesensitive
 
-
-// const {newArray} = ...locations;
-
-
-    setLocations({...locations, data:{...locations.data, places: filteredArray}}) // *! analisar isso
-    
-    console.log({locations});
-
-
-    
-
-    // setLocations(...locations,  {places: filteredArray}); // setLocations (filteredArray);
+    //then I am setting a new filtered State based on the on from the API
+    setFilteredLocations({
+      ...locations,
+      data: { ...locations.data, places: filteredArray },
+    });
   };
 
-  console.log({ locations });
+  const handleLocationTextFild = (location) => {
+    props.selectedList(location);
+  };
+
+  const handleSelectedLocation = (e, index) => {
+    setSelectedLocation(index);
+  };
+
   //Functions
   const listLocations = () => {
     return (
       <Paper className={classes.locationsList}>
-        <TextField onChange={(e) => handleLocations(e.target.value)} />
-        <List>
-          {locations ? (
-            locations.data.places.map((location, index) => {
-              return (
-                <>
-                  <ListItem key={index} button>
-                    <ListItemText>{location.name}</ListItemText>
-                  </ListItem>
-                  <Divider />
-                </>
-              );
-            })
-          ) : (
-            <h1>Loadiding...</h1>
-          )}
-        </List>
+        <Grid container direction="column" alignItems="center">
+          <Paper elevation={3} className={classes.searchBox}>
+            <Grid container alignItems="center">
+              <InputBase
+                variant="outlined"
+                onChange={(e) => handleLocations(e.target.value)}
+                className={classes.LocationSearchBox}
+                placeholder="Procurar unidade"
+              />
+              <Search />
+            </Grid>
+       
+          </Paper>
+          <List>
+            {filteredLocations ? (
+              filteredLocations.data.places.map((location, index) => {
+                return (
+                  <>
+                    <ListItem
+                      key={index}
+                      button
+                      selected={selectedLocation === location._id}
+                      onClick={(e) => {
+                        handleLocationTextFild(location);
+                        handleSelectedLocation(e, location._id);
+                      }}
+                    >
+                      <ListItemText>{location.name}</ListItemText>
+                    </ListItem>
+                    <Divider />
+                  </>
+                );
+              })
+            ) : locations ? (
+              locations.data.places.map((location, index) => {
+                return (
+                  <>
+                    <ListItem
+                      onClick={(e) => {
+                        handleLocationTextFild(location);
+                        handleSelectedLocation(e, location._id);
+                      }}
+                      key={index}
+                      button
+                      selected={selectedLocation === location._id}
+                    >
+                      <ListItemText>{location.name}</ListItemText>
+                    </ListItem>
+                    <Divider />
+                  </>
+                );
+              })
+            ) : (
+              <h1>Loading</h1>
+            )}
+          </List>
+        </Grid>
       </Paper>
     );
   };
 
   return <>{listLocations()}</>;
-}
+};
+
+export default React.memo(LocationsList);
