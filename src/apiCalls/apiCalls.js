@@ -29,7 +29,8 @@ export const getAllServices = () => {
 
 export const getLocationsByService = (serviceId, latlng) => {
 
-  
+  console.log(latlng);
+
   return fetch(
     // YOU AWAYS GOTTA GET THE FUCKING FETCH BACK
     `${API}/locations/getlocationsbyservice/${latlng}/${serviceId}`,

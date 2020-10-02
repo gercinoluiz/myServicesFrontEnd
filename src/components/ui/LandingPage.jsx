@@ -169,7 +169,7 @@ export default function LandScape() {
         //FIX: Come back Here
         return <h1>Error</h1>;
       });
-  }, []);
+  }, [latlng]);
 
   // GET ALL SERVICES
 
