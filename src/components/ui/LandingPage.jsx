@@ -148,13 +148,15 @@ export default function LandScape() {
 
   //getting location
   let latlng;
-  navigator.geolocation.getCurrentPosition((position) => {
-    latlng = `${position.coords.latitude}, ${position.coords.longitude}`;
-  });
 
   //Context
 
   const { openServiceDialog, setOpenServiceDialog } = useServiceDialog();
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    latlng = `${position.coords.latitude}, ${position.coords.longitude}`;
+  });
+
 
   // GET Nearst Location by Service
   useEffect(() => {
