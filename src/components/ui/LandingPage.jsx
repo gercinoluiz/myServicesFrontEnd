@@ -158,8 +158,9 @@ export default function LandScape() {
 
   // GET Nearst Location by Service
   useEffect(() => {
-    getAllNearLocations(latlng)
+    getLocationsByService("undefined", latlng)
       .then((locations) => {
+        console.log({ locations });
         setLocations(locations.data.places);
       })
       .catch(() => {
@@ -177,7 +178,7 @@ export default function LandScape() {
   }, [openServiceDialog, setOpenServiceDialog]);
 
   // Get coordinates
-
+  console.log(locations);
   // ===================================FUNCTION===============================
 
   const handleSearchLocationByService = (event, serviceId) => {
@@ -226,7 +227,10 @@ export default function LandScape() {
                   }}
                 >
                   <Typography className={classes.distance}>
-                    {location.distance.toString().substring(0, 2)} KM
+                    {location.distance
+                      ? location.distance.toString().substring(0, 2)
+                      : ""}{" "}
+                    KM
                   </Typography>
                   Distancia
                 </Grid>
@@ -245,7 +249,6 @@ export default function LandScape() {
       </div>
     );
   });
-  console.log({ filteredServices });
 
   const serviceDialog = (
     <Dialog
@@ -324,8 +327,8 @@ export default function LandScape() {
   );
 
   return (
-    <div  >
-      <Grid  className={classes.mainGrid}>{locationsCards}</Grid>
+    <div>
+      <Grid className={classes.mainGrid}>{locationsCards}</Grid>
 
       {serviceDialog}
     </div>

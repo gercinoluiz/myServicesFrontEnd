@@ -1,6 +1,7 @@
 import { API } from "../backend";
 import axios from "axios";
 
+//**! OLD
 export const getAllNearLocations = (latlng) => {
   return fetch(
     // YOU AWAYS GOTTA GET THE FUCKING FETCH BACK
@@ -14,6 +15,7 @@ export const getAllNearLocations = (latlng) => {
       throw new Error(error);
     });
 };
+//**!
 
 export const getAllServices = () => {
   console.log({ API });
@@ -26,6 +28,8 @@ export const getAllServices = () => {
 };
 
 export const getLocationsByService = (serviceId, latlng) => {
+
+  
   return fetch(
     // YOU AWAYS GOTTA GET THE FUCKING FETCH BACK
     `${API}/locations/getlocationsbyservice/${latlng}/${serviceId}`,

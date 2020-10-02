@@ -70,10 +70,6 @@ export default function AppBarFooter() {
             />
 
             <BottomNavigationAction
-              label="Unidades"
-              icon={<LocationCity className={classes.icons} />}
-            />
-            <BottomNavigationAction
               label="Procurar Serviço"
               icon={<Search className={classes.icons} />}
               onClick={() =>
