@@ -12,6 +12,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
 
 import { createNewLocation, deleteLocation } from "../../../apiCalls/apiCalls";
+import CadServices from "./CadServices";
 
 const useStyles = makeStyles((theme) => ({
   formPaper: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   txtName: {
     width: "35em",
     margin: "0.5em",
+
   },
 
   txtCep: {
@@ -224,7 +226,6 @@ export default function CadLocation(props) {
             <Typography>Unidade :</Typography>{" "}
             <TextField
               className={classes.txtName}
-            
               variant="outlined"
               name="name"
               onChange={handleCreateLocation("name")}
@@ -242,7 +243,6 @@ export default function CadLocation(props) {
           >
             <Typography>Endereço :</Typography>{" "}
             <TextField
-           
               className={classes.txtName}
               variant="outlined"
               justify="space-between"
@@ -251,30 +251,7 @@ export default function CadLocation(props) {
             />
           </Grid>
         </Grid>
-        <Grid item>
-          <Grid
-            item
-            container
-            direction="row"
-            alignItems="center"
-            justify="space-between"
-          >
-            <Typography>Cidade:</Typography>{" "}
-            <TextField
-            
-              className={classes.txtCidade}
-              variant="outlined"
-              onChange={handleCreateLocation("city")}
-            />
-            <Typography>Estado:</Typography>{" "}
-            <TextField
-              
-              className={classes.txtCidade}
-              variant="outlined"
-              onChange={handleCreateLocation("state")}
-            />
-          </Grid>
-        </Grid>
+     
         <Grid item>
           <Grid item container justify="flex-end">
             <Button
@@ -285,9 +262,6 @@ export default function CadLocation(props) {
             >
               Salvar
             </Button>
- 
- 
-        
           </Grid>
         </Grid>
       </Grid>

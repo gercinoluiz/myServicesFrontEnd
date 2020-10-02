@@ -9,10 +9,11 @@ import Button from "@material-ui/core/Button";
 import { makeStyles, Typography } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
+import { useTheme, useMediaQuery } from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 
-import  Update  from "@material-ui/icons/Update";
-import  Add  from "@material-ui/icons/Add";
+import Update from "@material-ui/icons/Update";
+import Add from "@material-ui/icons/Add";
 
 import { getAllServices } from "../../../apiCalls/apiCalls";
 
@@ -24,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
   formPaper: {
     width: "50em",
     height: "42em",
+    [theme.breakpoints.down("sm")]: {
+      width: "30em",
+      height: "60em",
+    },
   },
 
   txtName: {
@@ -50,14 +55,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CadForms(props) {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [value, setValue] = useState(0);
   const [selectedServices, setSelectedServices] = useState([]);
-
 
   const classes = useStyles();
 
   const tabItens = [
-    { tabName: "Editar undade", value: 0,  icon: <Update />  },
+    { tabName: "Editar undade", value: 0, icon: <Update /> },
     { tabName: "Nova Unidade", value: 1, icon: <Add /> },
   ];
 

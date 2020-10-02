@@ -18,12 +18,15 @@ import {
   BottomNavigationAction,
   makeStyles,
   AppBar,
+  Grid,
 } from "@material-ui/core";
 
 import MenuBook from "@material-ui/icons/MenuBook";
 import Info from "@material-ui/icons/Info";
 import LocationCity from "@material-ui/icons/LocationCity";
 import Search from "@material-ui/icons/Search";
+
+import { useMediaQuery, useTheme } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   BottomNavigation: {
@@ -36,11 +39,15 @@ const useStyles = makeStyles((theme) => ({
     top: "auto",
     bottom: 0,
     backgroundColor: "#ffff",
+    position: "fixed",
   },
 }));
 
 export default function AppBarFooter() {
   const classes = useStyles();
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("md"));
 
   const { openServiceDialog, setOpenServiceDialog } = useServiceDialog();
 
@@ -49,35 +56,34 @@ export default function AppBarFooter() {
   return (
     <div>
       <AppBar className={classes.botomAppBar}>
-        <BottomNavigation
-          value={value}
-          onChange={(value, newValue) => {
-            setValue(newValue);
-          }}
-          className={classes.BottomNavigation}
-        >
-          <BottomNavigationAction
-            label="Info."
-            icon={<Info className={classes.icons} />}
-          />
-          <BottomNavigationAction
-            label="Serviços"
-            icon={<MenuBook className={classes.icons} />}
-          />
-          <BottomNavigationAction
-            label="Unidades"
-            icon={<LocationCity className={classes.icons} />}
-          />
-          <BottomNavigationAction
-            label="Procurar Serviço"
-            icon={<Search className={classes.icons} />}
-            onClick={() =>
-              openServiceDialog
-                ? setOpenServiceDialog(false)
-                : setOpenServiceDialog(true)
-            }
-          />
-        </BottomNavigation>
+        <Grid container justify="center">
+          <BottomNavigation
+            value={value}
+            onChange={(value, newValue) => {
+              setValue(newValue);
+            }}
+            className={classes.BottomNavigation}
+          >
+            <BottomNavigationAction
+              label="Info."
+              icon={<Info className={classes.icons} />}
+            />
+
+            <BottomNavigationAction
+              label="Unidades"
+              icon={<LocationCity className={classes.icons} />}
+            />
+            <BottomNavigationAction
+              label="Procurar Serviço"
+              icon={<Search className={classes.icons} />}
+              onClick={() =>
+                openServiceDialog
+                  ? setOpenServiceDialog(false)
+                  : setOpenServiceDialog(true)
+              }
+            />
+          </BottomNavigation>
+        </Grid>
       </AppBar>
     </div>
   );

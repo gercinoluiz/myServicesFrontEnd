@@ -9,6 +9,8 @@ import Modal from "@material-ui/core/Modal";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 
+import { useTheme, useMediaQuery } from "@material-ui/core";
+
 import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
 
 import {
@@ -21,11 +23,18 @@ const useStyles = makeStyles((theme) => ({
   formPaper: {
     width: "50em",
     height: "30em",
+    [theme.breakpoints.down("sm")]: {
+      width: "30em",
+      height: "20em",
+    },
   },
 
   txtName: {
     width: "35em",
     margin: "0.5em",
+    [theme.breakpoints.down("sm")]: {
+      width: "15em",
+    },
   },
 
   txtCep: {
@@ -72,6 +81,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CadLocation(props) {
   const classes = useStyles();
+  const theme = useTheme();
+
+  const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
   const [locationDeleteModal, setLocationDeleteModel] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
@@ -233,7 +245,7 @@ export default function CadLocation(props) {
             container
             direction="row"
             alignItems="center"
-            justify="space-between"
+            justify={matches ? "space-between" : ""}
           >
             <Typography>Unidade :</Typography>{" "}
             <TextField
@@ -252,20 +264,19 @@ export default function CadLocation(props) {
             container
             direction="row"
             alignItems="center"
-            justify="space-between"
+            justify={matches ? "space-between" : ""}
           >
             <Typography>Endereço :</Typography>{" "}
             <TextField
               className={classes.txtName}
               value={newLocation.address ? newLocation.address.street : ""}
               variant="outlined"
-              justify="space-between"
               name="street"
               onChange={handleCreateLocation("street")}
             />
           </Grid>
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <Grid
             item
             container
@@ -288,9 +299,9 @@ export default function CadLocation(props) {
               onChange={handleCreateLocation("state")}
             />
           </Grid>
-        </Grid>
+        </Grid> */}
         <Grid item>
-          <Grid item container justify="flex-end">
+          <Grid item container justify={matches ? "flex-end" : "" }>
             <Button
               className={classes.deleteButton}
               onClick={() => setLocationDeleteModel(true)}

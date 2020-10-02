@@ -9,6 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Divider, makeStyles, Typography } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
+import { useTheme, useMediaQuery } from "@material-ui/core";
 
 import { AddCircleOutline } from "@material-ui/icons/AddCircleOutline";
 
@@ -18,17 +19,38 @@ const useStyles = makeStyles((theme) => ({
   list: {
     overflow: "auto",
     maxWidth: "20em",
-    width: "19em",
-    height: "15em",
+    width: "20em",
+    height: "16em",
   },
 
   button: {
     margin: "1em",
   },
+  paper: {
+    height: "20",
+    width: "22em",
+  },
+
+  gambiarra: {
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "2em",
+    },
+  },
+
+  text: {
+    fontSize: "1.5em",
+    fontFamily: "Roboto",
+    fontWeight: "Bold",
+    color: theme.palette.primary.main,
+    marginLeft: "3em",
+  },
 }));
 
 const CadServices = (props) => {
   const classes = useStyles();
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   // State
   const [services, setServices] = useState();
@@ -47,7 +69,7 @@ const CadServices = (props) => {
 
     setChecked(newArray);
   };
-  //SENDING THE SELECTED SERVICES BACK  
+  //SENDING THE SELECTED SERVICES BACK
   if (props.selectedServices) {
     props.selectedServices(checked);
   }
@@ -62,11 +84,18 @@ const CadServices = (props) => {
 
   return (
     <>
-      <Grid container style={{ margin: "auto 3em" }} direction="row">
-        <Grid style={{ marginRight: "4em" }} item>
-          <Typography variant="h6">Serviços nesta undiade</Typography>
+      <Grid
+        container
+        direction={matches ? "column" : "row"}
+        justify="space-around"
+        className={classes.gambiarra}
+      >
+        <Grid item>
+          <Typography className={classes.text} variant="h6">
+            Serviços nesta undiade
+          </Typography>
 
-          <Paper elevation={3}>
+          <Paper className={classes.paper} elevation={1}>
             <List className={classes.list}>
               {props.listItem ? (
                 props.listItem.services.map((service, index) => {
@@ -84,13 +113,15 @@ const CadServices = (props) => {
                 <h1>Vazio</h1>
               )}
             </List>
-            
           </Paper>
         </Grid>
+        <Divider />
 
         <Grid item>
-          <Typography variant="h6">Todos Serviços</Typography>{" "}
-          <Paper elevation={3}>
+          <Typography className={classes.text} variant="h6">
+            Todos Serviços
+          </Typography>{" "}
+          <Paper className={classes.paper} elevation={1}>
             <List className={classes.list}>
               {services ? (
                 services.data.services.map((service, index) => {
