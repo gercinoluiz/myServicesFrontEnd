@@ -121,10 +121,10 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "25em",
     height: "40em",
-
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    marginLeft: "45em",
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "0em",
+    },
   },
 }));
 

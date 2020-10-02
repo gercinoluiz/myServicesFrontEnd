@@ -10,12 +10,13 @@ import {
   IconButton,
 } from "@material-ui/core";
 
-import  Brightness4  from "@material-ui/icons/Brightness4";
+import Brightness4 from "@material-ui/icons/Brightness4";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     ...theme.mixins.toolbar,
-    height: "3em",
+    height: "3.5em",
+    position: "static",
   },
 
   appBar: {
@@ -45,4 +46,4 @@ function Header() {
     </>
   );
 }
-export default  Header
+export default Header;
