@@ -6,6 +6,9 @@ export default createMuiTheme({
     common: {},
     primary: {
       main: "#0A79DF",
+      light:"#BBDEFB",
+      contrastText:"#212121",
+      secondaryText:"#757575"
     },
   },
 });
