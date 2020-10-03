@@ -4,10 +4,11 @@ const serviceDialogContext = React.createContext();
 
 export default function ServiceDialogProvider({ children }) {
   const [openServiceDialog, setOpenServiceDialog] = useState(false);
+  const [openInfo, setOpenInfo] = useState(false);
 
   return (
     <serviceDialogContext.Provider
-      value={{ openServiceDialog, setOpenServiceDialog }}
+      value={{ openServiceDialog, setOpenServiceDialog, openInfo, setOpenInfo }}
     >
       {children}
     </serviceDialogContext.Provider>
@@ -17,7 +18,12 @@ export default function ServiceDialogProvider({ children }) {
 export const useServiceDialog = () => {
   const context = useContext(serviceDialogContext);
 
-  const { openServiceDialog, setOpenServiceDialog } = context;
+  const {
+    openServiceDialog,
+    setOpenServiceDialog,
+    openInfo,
+    setOpenInfo,
+  } = context;
 
-  return { openServiceDialog, setOpenServiceDialog };
+  return { openServiceDialog, setOpenServiceDialog, openInfo, setOpenInfo };
 };

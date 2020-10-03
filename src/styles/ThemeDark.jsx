@@ -12,8 +12,24 @@ export default  createMuiTheme({
   },
 
   typography: {
-    h7: {
-  
+    h3: {
+      color: "#03A9F4",
+      fontWeight: "bold",
+      fontFamily: "Robotto",
+      fontSize: "2em",
+    },
+
+    h4: {
+      color: "#03A9F4",
+      fontWeight: "bold",
+      fontFamily: "Robotto",
+      fontSize: "1.5em",
+    },
+
+    body2: {
+      color: "#03A9F4",
+      fontFamily: "Robotto",
+      fontSize: "1em",
     },
   },
 });

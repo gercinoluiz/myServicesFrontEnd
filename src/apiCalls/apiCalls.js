@@ -5,7 +5,7 @@ import axios from "axios";
 export const getAllNearLocations = (latlng) => {
   return fetch(
     // YOU AWAYS GOTTA GET THE FUCKING FETCH BACK
-    `${API}/locations/getlocationsbyservice/-23.6958247, -46.7868246/5f583ac164851548088aed9e`, //TODO: Fix the latitud an longtude
+    `${API}/locations/getlocationsnear/${latlng}`, //TODO: Fix the latitud an longtude
     { method: "GET" }
   )
     .then(
@@ -28,7 +28,6 @@ export const getAllServices = () => {
 };
 
 export const getLocationsByService = (serviceId, latlng) => {
-
   console.log(latlng);
 
   return fetch(

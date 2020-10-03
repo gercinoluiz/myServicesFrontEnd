@@ -5,6 +5,7 @@ import {
   getLocationsByService,
   getAllServices,
   getAllNearLocations,
+  getAllLocations,
 } from "../../apiCalls/apiCalls";
 
 import { useServiceDialog } from "../context/ServiceDialogContext";
@@ -45,6 +46,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import MenuBook from "@material-ui/icons/MenuBook";
 import Info from "@material-ui/icons/Info";
 import EventAvailable from "@material-ui/icons/EventAvailable";
+import Search from "@material-ui/icons/Search";
 
 import map from "../../images/map.png";
 
@@ -109,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
 
   textBox: {
     width: "20em",
-    height: "3em",
+    height: "2em",
   },
 
   warning: {
@@ -126,8 +128,13 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: "0em",
     },
   },
+
+  typographyH1: {
+    ...theme.typography.h1,
+  },
 }));
 
+//**Stil Study it  */
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -148,19 +155,24 @@ export default function LandScape() {
 
   //getting location
   let latlng;
-
-  //Context
-
-  const { openServiceDialog, setOpenServiceDialog } = useServiceDialog();
-
   navigator.geolocation.getCurrentPosition((position) => {
     latlng = `${position.coords.latitude}, ${position.coords.longitude}`;
   });
 
+  //Context
+
+  const {
+    openServiceDialog,
+    setOpenServiceDialog,
+    openInfo,
+    
+  } = useServiceDialog();
+
+  console.log({ latlng });
 
   // GET Nearst Location by Service
   useEffect(() => {
-    getLocationsByService("undefined", latlng)
+    getAllNearLocations(latlng)
       .then((locations) => {
         console.log({ locations });
         setLocations(locations.data.places);
@@ -179,8 +191,6 @@ export default function LandScape() {
     });
   }, [openServiceDialog, setOpenServiceDialog]);
 
-  // Get coordinates
-  console.log(locations);
   // ===================================FUNCTION===============================
 
   const handleSearchLocationByService = (event, serviceId) => {
@@ -328,9 +338,42 @@ export default function LandScape() {
     </Dialog>
   );
 
+  const info = (
+    <Grid>
+      <Typography variant="h3">Informações do Projeto: </Typography> <br/>
+
+
+
+      <Typography variant="h4">Funcionamento do aplicativo:</Typography>
+      <Typography variant="body2">
+      &ensp; Ao clicar na lupa de busca <Search/>, no canto inferior direito, basta selecionar o serviço desejado, e o
+        aplicativo retornará a unidade te atendimento ao público mais próxima à
+        sua localização que atenda o serviço selecionado.
+      </Typography><br/>
+
+      <Typography variant="h4">Intuito do Aplicativo:</Typography>
+      <Typography variant="body2">
+      &ensp;O Meu Serviço foi criado para facilitar a vida do cidadão quando
+        precisar encontrar algum serviço realizado por alguma entidade de
+        atendimento ao público, como Descomplca SP, Poupa Tempo, Cartórios,
+        Bancos, INSS etc.
+      </Typography><br/>
+
+      {/* <Typography variant="h4">Intuito do projeto:</Typography>
+      <Typography variant="body2">
+      &ensp; Esse projeto foi realizado com intuito de fortalecer meus conhecimentos
+        na stack MERN <span>MongoDB, Express, React e Node</span>, bem como meus
+        conhecimentos em inglês, logo, as funções, comentários etc., são todos
+        em inglês
+      </Typography> */}
+    </Grid>
+  );
+
   return (
     <div>
-      <Grid className={classes.mainGrid}>{locationsCards}</Grid>
+      <Grid className={classes.mainGrid}>
+        {openInfo ? info : locationsCards}
+      </Grid>
 
       {serviceDialog}
     </div>

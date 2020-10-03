@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 
 const ThemeContext = React.createContext();
 function ThemeChangeProvider({ children }) {
-  const [theme, setTheme] = useState(false);
+  const [theme, setTheme] = useState(true);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -13,8 +13,6 @@ function ThemeChangeProvider({ children }) {
 
 export function useTheme() {
   const context = useContext(ThemeContext);
-
-  console.log(useContext(ThemeContext));
 
   const { theme, setTheme } = context;
 

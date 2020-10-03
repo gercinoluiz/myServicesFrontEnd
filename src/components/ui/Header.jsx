@@ -36,9 +36,9 @@ function Header() {
         <Grid justify="space-between" container>
           <Grid item></Grid>
           <Grid item>
-            <IconButton onClick={() => setTheme(theme ? false : true)}>
+            {/* <IconButton onClick={() => setTheme(theme ? false : true)}>
               <Brightness4 />
-            </IconButton>
+            </IconButton> */}
           </Grid>
         </Grid>
       </AppBar>

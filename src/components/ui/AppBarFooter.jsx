@@ -49,7 +49,11 @@ export default function AppBarFooter() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
-  const { openServiceDialog, setOpenServiceDialog } = useServiceDialog();
+  const {
+    openServiceDialog,
+    setOpenServiceDialog,
+    setOpenInfo,
+  } = useServiceDialog();
 
   const [value, setValue] = useState(0);
 
@@ -67,16 +71,25 @@ export default function AppBarFooter() {
             <BottomNavigationAction
               label="Info."
               icon={<Info className={classes.icons} />}
+              onClick={() => setOpenInfo(true)}
+            />
+
+            <BottomNavigationAction
+              label="Unidades"
+              icon={<LocationCity className={classes.icons} />}
+              onClick={() => window.location.reload(false)}
             />
 
             <BottomNavigationAction
               label="Procurar Serviço"
               icon={<Search className={classes.icons} />}
-              onClick={() =>
+              onClick={() => {
                 openServiceDialog
                   ? setOpenServiceDialog(false)
-                  : setOpenServiceDialog(true)
-              }
+                  : setOpenServiceDialog(true);
+
+                setOpenInfo(false);
+              }}
             />
           </BottomNavigation>
         </Grid>
