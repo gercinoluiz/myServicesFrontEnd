@@ -15,8 +15,6 @@ import Brightness4 from "@material-ui/icons/Brightness4";
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     ...theme.mixins.toolbar,
-    height: "3.5em",
-    position: "static",
   },
 
   appBar: {
@@ -32,6 +30,7 @@ function Header() {
 
   return (
     <>
+      <div className={classes.toolbar}></div>
       <AppBar className={classes.appBar}>
         <Grid justify="space-between" container>
           <Grid item></Grid>
@@ -42,7 +41,6 @@ function Header() {
           </Grid>
         </Grid>
       </AppBar>
-      <div className={classes.toolbar}></div>
     </>
   );
 }

@@ -32,6 +32,14 @@ const useStyles = makeStyles((theme) => ({
   BottomNavigation: {
     width: 450,
   },
+  toolbar: {
+    ...theme.mixins.toolbar,
+    height: "3.5em",
+    position: "static",
+    top: "auto",
+    bottom: 0,
+    zIndex: 1302,
+  },
   icons: {
     color: theme.palette.primary.main,
   },
@@ -94,6 +102,7 @@ export default function AppBarFooter() {
           </BottomNavigation>
         </Grid>
       </AppBar>
+
     </div>
   );
 }
