@@ -152,12 +152,7 @@ export default function LandScape() {
   const [locations, setLocations] = useState([]);
   const [services, setServices] = useState([]);
   const [filteredServices, setFilteredServices] = useState([]);
-
-  //getting location
-  let latlng;
-  navigator.geolocation.getCurrentPosition((position) => {
-    latlng = `${position.coords.latitude}, ${position.coords.longitude}`;
-  });
+  const [latlng, setLatlng] = useState("");
 
   //Context
 
@@ -171,6 +166,12 @@ export default function LandScape() {
 
   // GET Nearst Location by Service
   useEffect(() => {
+    //getting location   ---- GOTTA BE IN USEEFFECT AND USING STATE
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLatlng(`${position.coords.latitude}, ${position.coords.longitude}`);
+    });
+
     latlng
       ? getAllNearLocations(latlng)
           .then((locations) => {
@@ -326,10 +327,10 @@ export default function LandScape() {
         ) : services ? (
           services.map((service, index) => {
             return (
-             <div key={index}>
+              <div>
                 <ListItem
                   button
-                  
+                  key={index}
                   onClick={(e) => {
                     handleSearchLocationByService(e, service._id);
                     setOpenServiceDialog(false);
@@ -338,7 +339,7 @@ export default function LandScape() {
                   <ListItemText>{service.name}</ListItemText>
                 </ListItem>
                 <Divider />
-                </div>
+              </div>
             );
           })
         ) : (
@@ -355,14 +356,14 @@ export default function LandScape() {
       <Typography variant="body2">
         &ensp; Ao clicar na lupa de busca <Search />, no canto inferior direito,
         basta selecionar o serviço desejado, e o aplicativo retornará a unidade
-        te atendimento ao público mais próxima à sua localização que atenda o
+        de atendimento ao público mais próxima à sua localização, desde que atenda o
         serviço selecionado.
       </Typography>
       <br />
       <Typography variant="h4">Intuito do Aplicativo:</Typography>
       <Typography variant="body2">
         &ensp;O Meu Serviço foi criado para facilitar a vida do cidadão quando
-        precisar encontrar algum serviço realizado por alguma entidade de
+        precisar encontrar algum serviço realizado por alguma unidade de
         atendimento ao público, como Descomplca SP, Poupa Tempo, Cartórios,
         Bancos, INSS etc.
       </Typography>
