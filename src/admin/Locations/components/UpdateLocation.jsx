@@ -11,10 +11,10 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 import { useTheme, useMediaQuery } from "@material-ui/core";
 
-import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
+// import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
 
 import {
-  createNewLocation,
+  
   deleteLocation,
   updateLocal,
 } from "../../../apiCalls/apiCalls";
@@ -88,7 +88,7 @@ export default function CadLocation(props) {
   const [locationDeleteModal, setLocationDeleteModel] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [snackBarType, setSnackbarType] = useState("");
-  const [inputFocus, setInputFoucus] = useState(0);
+  // const [inputFocus, setInputFoucus] = useState(0);
 
   const [newLocation, setNewLocation] = useState({
     name: "",

@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 
 //@ MUI Import
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
+// import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { Divider, IconButton, InputBase, useTheme } from "@material-ui/core";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import Checkbox from "@material-ui/core/Checkbox";
-import Modal from "@material-ui/core/Modal";
+import { Divider, InputBase, useTheme } from "@material-ui/core";
+// import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+// import Checkbox from "@material-ui/core/Checkbox";
+// import Modal from "@material-ui/core/Modal";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import useMediaQuery from "@material-ui/core/useMediaQuery"; // With this, I can have acces to change the media query of MUI
-import EventAvailable from "@material-ui/icons/EventAvailable";
+// import EventAvailable from "@material-ui/icons/EventAvailable";
 import HomeWork from "@material-ui/icons/HomeWork";
 
 import Search from "@material-ui/icons/Search";

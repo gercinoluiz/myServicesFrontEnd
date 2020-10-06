@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useServiceDialog } from "../context/ServiceDialogContext";
 
 /*Documentation:
@@ -21,12 +21,12 @@ import {
   Grid,
 } from "@material-ui/core";
 
-import MenuBook from "@material-ui/icons/MenuBook";
+// import MenuBook from "@material-ui/icons/MenuBook";
 import Info from "@material-ui/icons/Info";
 import LocationCity from "@material-ui/icons/LocationCity";
 import Search from "@material-ui/icons/Search";
 
-import { useMediaQuery, useTheme } from "@material-ui/core";
+// import { useTheme } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   BottomNavigation: {
@@ -54,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
 export default function AppBarFooter() {
   const classes = useStyles();
 
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("md"));
+  // const theme = useTheme();
+  // const matches = useMediaQuery(theme.breakpoints.up("md"));
 
   const {
     openServiceDialog,

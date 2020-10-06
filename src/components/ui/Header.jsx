@@ -1,16 +1,13 @@
 import React from "react";
 
-import { useTheme } from "../context/ThemeContext";
+// import { useTheme } from "../context/ThemeContext";
 
 import {
   AppBar,
   Grid,
-  Button,
   makeStyles,
-  IconButton,
 } from "@material-ui/core";
 
-import Brightness4 from "@material-ui/icons/Brightness4";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -24,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header() {
-  const { theme, setTheme } = useTheme();
+  // const { theme, setTheme } = useTheme();
 
   const classes = useStyles();
 

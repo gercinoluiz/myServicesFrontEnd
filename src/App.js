@@ -4,7 +4,7 @@ import React from "react";
 
 
 //UI Components
-import { Header, Footer, LandingPage } from "./components/ui/";
+import { Header,  LandingPage } from "./components/ui/";
 import AppBarFooter from "./components/ui/AppBarFooter";
 
 function App() {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import AppBarFooter from "./AppBarFooter";
-import Header from "./Header";
+// import AppBarFooter from "./AppBarFooter";
+// import Header from "./Header";
 import {
   getLocationsByService,
   getAllServices,
@@ -13,19 +13,19 @@ import { useServiceDialog } from "../context/ServiceDialogContext";
 import {
   Grid,
   Card,
-  CardActionArea,
+  // CardActionArea,
   CardContent,
-  CardMedia,
-  CardActions,
+  // CardMedia,
+  // CardActions,
   Typography,
   makeStyles,
   List,
 } from "@material-ui/core";
 
-import sp from "../../images/sp.png";
+// import sp from "../../images/sp.png";
 
 import Dialog from "@material-ui/core/Dialog";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -37,15 +37,15 @@ import Slide from "@material-ui/core/Slide";
 import InputBase from "@material-ui/core/InputBase";
 import Paper from "@material-ui/core/Paper";
 
-import { useMediaQuery, useTheme } from "@material-ui/core";
+// import { useTheme } from "@material-ui/core";
 
-import DateRange from "@material-ui/icons/DateRange";
-import Room from "@material-ui/icons/Room";
+// import DateRange from "@material-ui/icons/DateRange";
+// import Room from "@material-ui/icons/Room";
 import CloseIcon from "@material-ui/icons/Close";
 
-import MenuBook from "@material-ui/icons/MenuBook";
-import Info from "@material-ui/icons/Info";
-import EventAvailable from "@material-ui/icons/EventAvailable";
+// import MenuBook from "@material-ui/icons/MenuBook";
+// import Info from "@material-ui/icons/Info";
+// import EventAvailable from "@material-ui/icons/EventAvailable";
 import Search from "@material-ui/icons/Search";
 
 import map from "../../images/map.png";
@@ -121,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
 
   mainGrid: {
     position: "absolute",
-  
+
     marginLeft: "45em",
     marginBottom: "4em",
     [theme.breakpoints.down("sm")]: {
@@ -144,8 +144,8 @@ export default function LandScape() {
   //=====================Variables==========================================
   const classes = useStyles();
 
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up("md"));
+  // const theme = useTheme();
+  // const matches = useMediaQuery(theme.breakpoints.up("md"));
 
   //========================Hooks===========================================
 
@@ -218,9 +218,9 @@ export default function LandScape() {
 
   // =================================Components=======================================
 
-  const locationsCards = locations.map((location) => {
+  const locationsCards = locations.map((location, index) => {
     return (
-      <div>
+      <div key={index}>
         <Card className={classes.Card}>
           <CardContent>
             <Grid container justify="space-around">
@@ -306,9 +306,9 @@ export default function LandScape() {
       <Divider />
       <List>
         {filteredServices.length !== 0 ? (
-          filteredServices.map((service) => {
+          filteredServices.map((service, index) => {
             return (
-              <>
+              <div key={index}>
                 <ListItem
                   button
                   onClick={(e) => {
@@ -320,15 +320,16 @@ export default function LandScape() {
                   <ListItemText>{service.name}</ListItemText>
                 </ListItem>
                 <Divider />
-              </>
+              </div>
             );
           })
         ) : services ? (
-          services.map((service) => {
+          services.map((service, index) => {
             return (
-              <>
+             <div key={index}>
                 <ListItem
                   button
+                  
                   onClick={(e) => {
                     handleSearchLocationByService(e, service._id);
                     setOpenServiceDialog(false);
@@ -337,7 +338,7 @@ export default function LandScape() {
                   <ListItemText>{service.name}</ListItemText>
                 </ListItem>
                 <Divider />
-              </>
+                </div>
             );
           })
         ) : (

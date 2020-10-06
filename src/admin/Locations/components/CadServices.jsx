@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+// import TextField from "@material-ui/core/TextField";
+// import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -11,9 +11,9 @@ import { Divider, makeStyles, Typography } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import { useTheme, useMediaQuery } from "@material-ui/core";
 
-import { AddCircleOutline } from "@material-ui/icons/AddCircleOutline";
+// import { AddCircleOutline } from "@material-ui/icons/AddCircleOutline";
 
-import { getAllLocations, getAllServices } from "../../../apiCalls/apiCalls";
+import { getAllServices } from "../../../apiCalls/apiCalls";
 
 const useStyles = makeStyles((theme) => ({
   list: {

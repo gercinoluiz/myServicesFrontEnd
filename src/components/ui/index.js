@@ -1,5 +1,5 @@
 import Header from "./Header";
-import Footer from "./Footer";
+// import Footer from "../../../trash/Footer";
 import LandingPage from "./LandingPage";
 
-export { Header, Footer, LandingPage };
+export { Header,  LandingPage };

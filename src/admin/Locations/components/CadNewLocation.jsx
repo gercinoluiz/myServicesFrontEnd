@@ -9,10 +9,10 @@ import Modal from "@material-ui/core/Modal";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 
-import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
+// import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
 
 import { createNewLocation, deleteLocation } from "../../../apiCalls/apiCalls";
-import CadServices from "./CadServices";
+// import CadServices from "./CadServices";
 
 const useStyles = makeStyles((theme) => ({
   formPaper: {

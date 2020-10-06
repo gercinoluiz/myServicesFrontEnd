@@ -1,21 +1,21 @@
 // Aqui eu to usando sempre Props... Mas o interesante [e usar Contex API]
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import { makeStyles, Typography } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
+// import TextField from "@material-ui/core/TextField";
+// import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core";
+// import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
-import { useTheme, useMediaQuery } from "@material-ui/core";
+// import { useTheme } from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 
 import Update from "@material-ui/icons/Update";
 import Add from "@material-ui/icons/Add";
 
-import { getAllServices } from "../../../apiCalls/apiCalls";
+// import { getAllServices } from "../../../apiCalls/apiCalls";
 
 import CadLocation from "./UpdateLocation";
 import CadServices from "./CadServices";
@@ -55,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CadForms(props) {
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  // const theme = useTheme();
+  // const matches = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [value, setValue] = useState(0);
   const [selectedServices, setSelectedServices] = useState([]);
