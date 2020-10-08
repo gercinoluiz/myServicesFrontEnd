@@ -57,9 +57,35 @@ const useStyles = makeStyles((theme) => ({
   },
 
   Card: {
-    width: "25em",
+    width: "23em",
     height: "9em",
     marginTop: "0.5em",
+
+    // [theme.breakpoints.down("xl")]: {
+    //   width: "1920px",
+
+    // },
+
+    [theme.breakpoints.up("lg")]: {
+      width: "800px",
+    },
+
+    [theme.breakpoints.down("md")]: {
+      width: "700px",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "380px",
+      marginLeft: "5px",
+    },
+
+    [theme.breakpoints.down("mi")]: {
+      width: "700px",
+      marginLeft: "5px",
+    },
+
+    [theme.breakpoints.down("xs")]: {
+      width: "335px",
+    },
   },
 
   title: {
@@ -67,12 +93,18 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Roboto",
     fontWeight: "Bold",
     color: theme.palette.primary.contrastText,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.8em",
+    },
   },
 
   address: {
     fontSize: "0.9em",
     fontFamily: "Roboto",
     color: theme.palette.primary.secondaryText,
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.7em",
+    },
   },
 
   distance: {
@@ -81,6 +113,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1em",
     fontWeight: "bold",
     color: "black",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "1em",
+    },
   },
 
   iconCalendar: {
@@ -114,16 +149,14 @@ const useStyles = makeStyles((theme) => ({
     height: "2em",
   },
 
-  warning: {
-    fontSize: "0.7em",
-    color: theme.palette.primary.contrastText,
-  },
-
   mainGrid: {
     position: "absolute",
 
-    marginLeft: "45em",
+    marginLeft: "33em",
     marginBottom: "4em",
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "5em",
+    },
     [theme.breakpoints.down("sm")]: {
       marginLeft: "0em",
     },
@@ -131,6 +164,45 @@ const useStyles = makeStyles((theme) => ({
 
   typographyH1: {
     ...theme.typography.h1,
+  },
+
+  gridInfo: {
+    width: "500px",
+    [theme.breakpoints.down("xs")]: {
+      width: "200px",
+    },
+  },
+  gridDistance: {
+    width: "5em",
+    height: "4em",
+    backgroundImage: `url(${map})`,
+    opacity: "1",
+    color: "black",
+    borderRadius: 5,
+    textAlign: "center",
+    [theme.breakpoints.down("xs")]: {
+      width: "3em",
+      height: "3em",
+    },
+  },
+
+  warning: {
+    fontSize: "0.7em",
+    color: theme.palette.primary.contrastText,
+
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.5em",
+    },
+  },
+
+  ditanceBellow: {
+    fontSize: "1em",
+    color: theme.palette.primary.contrastText,
+
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.6em",
+      fontWeight: "bold",
+    },
   },
 }));
 
@@ -166,31 +238,35 @@ export default function LandScape() {
 
   // GET Nearst Location by Service
   useEffect(() => {
-    //getting location   ---- GOTTA BE IN USEEFFECT AND USING STATE
+    //getting location   ---- GOTTA BE IN USEEFFECT AND USING STATE ---> https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
+    // In use Effect, as it is a callback, it will await the response of the browser
+    // If I would put at the middle of my code, as I did befoere, it would render first than getting position
 
     navigator.geolocation.getCurrentPosition((position) => {
       setLatlng(`${position.coords.latitude}, ${position.coords.longitude}`);
-    });
 
-    latlng
-      ? getAllNearLocations(latlng)
-          .then((locations) => {
-            console.log({ locations });
-            setLocations(locations.data.places);
-          })
-          .catch(() => {
-            //FIX: Come back Here
-            return <h1>Error</h1>;
-          })
-      : getAllLocations()
-          .then((locations) => {
-            console.log({ locations });
-            setLocations(locations.data.places);
-          })
-          .catch(() => {
-            //FIX: Come back Here
-            return <h1>Error</h1>;
-          });
+      // latlng
+      // ?
+      getAllNearLocations(latlng)
+        .then((locations) => {
+          console.log({ locations });
+          setLocations(locations.data.places);
+        })
+        .catch(() => {
+          //FIX: Come back Here
+          return <h1>Error</h1>;
+        });
+      // :
+      //  getAllLocations()
+      //     .then((locations) => {
+      //       console.log({ locations });
+      //       setLocations(locations.data.places);
+      //     })
+      //     .catch(() => {
+      //       //FIX: Come back Here
+      //       return <h1>Error</h1>;
+      //     });
+    });
   }, [latlng]);
 
   // GET ALL SERVICES
@@ -225,7 +301,7 @@ export default function LandScape() {
         <Card className={classes.Card}>
           <CardContent>
             <Grid container justify="space-around">
-              <Grid item style={{ width: "15em" }}>
+              <Grid item className={classes.gridInfo}>
                 <Typography className={classes.title}>
                   {location.name}
                 </Typography>
@@ -235,32 +311,29 @@ export default function LandScape() {
                   </Typography>
                 </Grid>
               </Grid>
+
               <Grid item>
-                <Grid
-                  item
-                  style={{
-                    width: "5em",
-                    height: "4em",
-                    backgroundImage: `url(${map})`,
-                    opacity: "1",
-                    color: "black",
-                    borderRadius: 5,
-                    textAlign: "center",
-                  }}
-                >
+                <Grid item className={classes.gridDistance}>
                   <Typography className={classes.distance}>
                     {location.distance
                       ? location.distance.toString().substring(0, 2)
                       : ""}{" "}
                     KM
                   </Typography>
-                  Distancia
+                  <Typography className={classes.ditanceBellow}>
+                    Distância
+                  </Typography>
                 </Grid>
               </Grid>
-              <Grid container>
+              <Grid
+                container
+                direction="column"
+                className={classes.warningGrid}
+              >
                 <Typography className={classes.warning}>
                   * Verifique a política de agendamento da unidade no site.
                 </Typography>
+
                 <Typography className={classes.warning}>
                   * Clique para mais detalhes.
                 </Typography>
@@ -327,7 +400,7 @@ export default function LandScape() {
         ) : services ? (
           services.map((service, index) => {
             return (
-              <div>
+              <div key={index}>
                 <ListItem
                   button
                   key={index}
@@ -356,8 +429,8 @@ export default function LandScape() {
       <Typography variant="body2">
         &ensp; Ao clicar na lupa de busca <Search />, no canto inferior direito,
         basta selecionar o serviço desejado, e o aplicativo retornará a unidade
-        de atendimento ao público mais próxima à sua localização, desde que atenda o
-        serviço selecionado.
+        de atendimento ao público mais próxima à sua localização, desde que
+        atenda o serviço selecionado.
       </Typography>
       <br />
       <Typography variant="h4">Intuito do Aplicativo:</Typography>
