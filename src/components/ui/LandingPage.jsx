@@ -5,7 +5,7 @@ import {
   getLocationsByService,
   getAllServices,
   getAllNearLocations,
-  getAllLocations,
+  
 } from "../../apiCalls/apiCalls";
 
 import { useServiceDialog } from "../context/ServiceDialogContext";
@@ -61,10 +61,6 @@ const useStyles = makeStyles((theme) => ({
     height: "9em",
     marginTop: "0.5em",
 
-    // [theme.breakpoints.down("xl")]: {
-    //   width: "1920px",
-
-    // },
 
     [theme.breakpoints.up("lg")]: {
       width: "800px",
@@ -75,12 +71,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("sm")]: {
       width: "380px",
-      marginLeft: "5px",
-    },
-
-    [theme.breakpoints.down("mi")]: {
-      width: "700px",
-      marginLeft: "5px",
+   
     },
 
     [theme.breakpoints.down("xs")]: {
@@ -94,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "Bold",
     color: theme.palette.primary.contrastText,
     [theme.breakpoints.down("xs")]: {
-      fontSize: "0.8em",
+      fontSize: "0.9em",
     },
   },
 
@@ -103,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Roboto",
     color: theme.palette.primary.secondaryText,
     [theme.breakpoints.down("xs")]: {
-      fontSize: "0.7em",
+      fontSize: "0.8em",
     },
   },
 
@@ -114,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     color: "black",
     [theme.breakpoints.down("xs")]: {
-      fontSize: "1em",
+      fontSize: "1.5em",
     },
   },
 
@@ -152,7 +143,10 @@ const useStyles = makeStyles((theme) => ({
   mainGrid: {
     position: "absolute",
 
-    marginLeft: "33em",
+ 
+    left: "50%",
+    transform: "translate(-50%)",
+
     marginBottom: "4em",
     [theme.breakpoints.down("md")]: {
       marginLeft: "5em",
@@ -171,8 +165,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       width: "200px",
     },
+    [theme.breakpoints.down("sm")]: {
+      width: "200px",
+    },
   },
   gridDistance: {
+ 
     width: "5em",
     height: "4em",
     backgroundImage: `url(${map})`,
@@ -181,17 +179,17 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 5,
     textAlign: "center",
     [theme.breakpoints.down("xs")]: {
-      width: "3em",
-      height: "3em",
+      width: "5em",
+      height: "4em",
     },
   },
 
   warning: {
-    fontSize: "0.7em",
+    fontSize: "0.9em",
     color: theme.palette.primary.contrastText,
 
     [theme.breakpoints.down("xs")]: {
-      fontSize: "0.5em",
+      fontSize: "0.7em",
     },
   },
 
@@ -200,7 +198,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.contrastText,
 
     [theme.breakpoints.down("xs")]: {
-      fontSize: "0.6em",
+      fontSize: "0.9em",
       fontWeight: "bold",
     },
   },
