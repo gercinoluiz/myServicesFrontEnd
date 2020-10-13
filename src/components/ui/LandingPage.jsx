@@ -5,7 +5,6 @@ import {
   getLocationsByService,
   getAllServices,
   getAllNearLocations,
-  
 } from "../../apiCalls/apiCalls";
 
 import { useServiceDialog } from "../context/ServiceDialogContext";
@@ -55,12 +54,15 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolBar,
     height: "4em",
   },
+  about: {
+    width: "90vw",
+    maxWidth: "1000px",
+  },
 
   Card: {
     width: "23em",
     height: "9em",
     marginTop: "0.5em",
-
 
     [theme.breakpoints.up("lg")]: {
       width: "800px",
@@ -71,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("sm")]: {
       width: "380px",
-   
     },
 
     [theme.breakpoints.down("xs")]: {
@@ -138,12 +139,12 @@ const useStyles = makeStyles((theme) => ({
   textBox: {
     width: "20em",
     height: "2em",
+    padding: "8px",
   },
 
   mainGrid: {
     position: "absolute",
 
- 
     left: "50%",
     transform: "translate(-50%)",
 
@@ -170,7 +171,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   gridDistance: {
- 
     width: "5em",
     height: "4em",
     backgroundImage: `url(${map})`,
@@ -354,13 +354,14 @@ export default function LandScape() {
       TransitionComponent={Transition}
     >
       <AppBar>
-        <Toolbar>
+        <Toolbar style={{ paddingLeft: "0px" }}>
           <IconButton
             color="inherit"
             onClick={() => {
               setOpenServiceDialog(false);
               setFilteredServices([]);
             }}
+            style={{ marginLeft: "5px" }}
             arial-labe="close"
           >
             <CloseIcon />
@@ -421,7 +422,7 @@ export default function LandScape() {
   );
 
   const info = (
-    <Grid>
+    <Grid className={classes.about}>
       <Typography variant="h3">Informações do Projeto: </Typography> <br />
       <Typography variant="h4">Funcionamento do aplicativo:</Typography>
       <Typography variant="body2">

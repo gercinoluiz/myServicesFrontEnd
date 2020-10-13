@@ -2,16 +2,12 @@ import React from "react";
 
 // import { useTheme } from "../context/ThemeContext";
 
-import {
-  AppBar,
-  Grid,
-  makeStyles,
-} from "@material-ui/core";
-
+import { AppBar, Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     ...theme.mixins.toolbar,
+   
   },
 
   appBar: {
