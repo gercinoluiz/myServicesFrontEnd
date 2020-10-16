@@ -296,7 +296,11 @@ export default function LandScape() {
 
   const locationsCards = locations.map((location, index) => {
     return (
-      <Link key={index} to={`https://www.google.com/maps/dir/?api=1&origin=Google+Pyrmont+NSW&destination=${location.address.latitude}, ${location.address.longitude}`}>
+      <a key={index} style={{
+    color: #0060B6;
+    text-decoration: none;
+
+}} href={`noopener noreferrer https://www.google.com/maps/dir/?api=1&origin=Google+Pyrmont+NSW&destination=${location.address.latitude}, ${location.address.longitude}`}>
         <Card className={classes.Card}>
           <CardContent>
             <Grid container justify="space-around">
@@ -340,7 +344,7 @@ export default function LandScape() {
             </Grid>
           </CardContent>
         </Card>
-      </Link>
+      </a>
     );
   });
 
