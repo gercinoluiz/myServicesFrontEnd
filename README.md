@@ -4,8 +4,7 @@
 Esse projeto tem o intuito de facilitar a vida do cidão ao realiza buscar por serviços oferecidos por unidades de atendimento ao público!
 
 ### `Modo de usar`:
-Super simple, ao clicar na lupa para buscas de serviços no canto inferior direito, basta selecionar o serviço e o APP te retornará a unidade de atendimento ao público mais próxima de você!
-
+Super simples, ao clicar na lupa para buscas de serviços no canto inferior direito, basta selecionar o serviço e o APP te retornará a unidade de atendimento ao público mais próxima de você!
 
 
 ## Desenvolvimento:

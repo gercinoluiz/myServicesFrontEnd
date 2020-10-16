@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {Link} from "react-router-dom"
 // import AppBarFooter from "./AppBarFooter";
 // import Header from "./Header";
 import {
@@ -295,7 +296,7 @@ export default function LandScape() {
 
   const locationsCards = locations.map((location, index) => {
     return (
-      <div key={index}>
+      <Link key={index} to={`https://www.google.com/maps/dir/?api=1&origin=Google+Pyrmont+NSW&destination=${location.address.latitude}, ${location.address.longitude}`}>
         <Card className={classes.Card}>
           <CardContent>
             <Grid container justify="space-around">
@@ -309,7 +310,7 @@ export default function LandScape() {
                   </Typography>
                 </Grid>
               </Grid>
-
+            
               <Grid item>
                 <Grid item className={classes.gridDistance}>
                   <Typography className={classes.distance}>
@@ -339,7 +340,7 @@ export default function LandScape() {
             </Grid>
           </CardContent>
         </Card>
-      </div>
+      </Link>
     );
   });
 
