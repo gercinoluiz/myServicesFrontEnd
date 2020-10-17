@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
 // import AppBarFooter from "./AppBarFooter";
 // import Header from "./Header";
 import {
@@ -293,53 +294,62 @@ export default function LandScape() {
 
   // =================================Components=======================================
 
+  console.log({ locations })
+
   const locationsCards = locations.map((location, index) => {
     return (
       <div key={index}>
-        <Card className={classes.Card}>
-          <CardContent>
-            <Grid container justify="space-around">
-              <Grid item className={classes.gridInfo}>
-                <Typography className={classes.title}>
-                  {location.name}
-                </Typography>
-                <Grid className={classes.gridIcon}>
-                  <Typography className={classes.address}>
-                    {location.address ? location.address.street : "Not found"}
+        <a key={index}
+          style={{ textDecoration: 'none' }}
+          rel="noopener noreferrer"
+          href={`https://www.google.com/maps/dir/?api=1&origin=${latlng}&destination=${location.location.coordinates[0]}, ${location.location.coordinates[1]}`}>
+          <Card className={classes.Card}>
+            <CardContent>
+              <Grid container justify="space-around">
+                <Grid item className={classes.gridInfo}>
+                  <Typography className={classes.title}>
+                    {location.name}
                   </Typography>
+                  <Grid className={classes.gridIcon}>
+                    <Typography className={classes.address}>
+                      {location.address ? location.address.street : "Not found"}
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
 
-              <Grid item>
-                <Grid item className={classes.gridDistance}>
-                  <Typography className={classes.distance}>
-                    {location.distance
-                      ? location.distance.toString().substring(0, 2)
-                      : ""}{" "}
+
+                <Grid item>
+                  <Grid item className={classes.gridDistance}>
+                    <Typography className={classes.distance}>
+                      {location.distance
+                        ? location.distance.toString().substring(0, 2)
+                        : ""}{" "}
                     KM
                   </Typography>
-                  <Typography className={classes.ditanceBellow}>
-                    Distância
+                    <Typography className={classes.ditanceBellow}>
+                      Distância
                   </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid
-                container
-                direction="column"
-                className={classes.warningGrid}
-              >
-                <Typography className={classes.warning}>
-                  * Verifique a política de agendamento da unidade no site.
+                <Grid
+                  container
+                  direction="column"
+                  className={classes.warningGrid}
+                >
+                  <Typography className={classes.warning}>
+                    * Verifique a política de agendamento da unidade no site.
                 </Typography>
 
-                <Typography className={classes.warning}>
-                  * Clique para mais detalhes.
+                  <Typography className={classes.warning}>
+                    * Clique para mais detalhes.
                 </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </a>
       </div>
+
     );
   });
 
@@ -415,8 +425,8 @@ export default function LandScape() {
             );
           })
         ) : (
-          <h1>Waiting</h1>
-        )}
+              <h1>Waiting</h1>
+            )}
       </List>
     </Dialog>
   );
