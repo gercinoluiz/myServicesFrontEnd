@@ -4,9 +4,9 @@ export default createMuiTheme({
   palette: {
     common: {},
     primary: {
-      main: "#0A79DF",
+      main: "#0063a7",
       light: "#BBDEFB",
-      contrastText: "#212121",
+      contrastText: "#34495e",
       secondaryText: "#757575",
     },
   },

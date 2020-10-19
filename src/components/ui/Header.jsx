@@ -2,21 +2,27 @@ import React from "react";
 
 // import { useTheme } from "../context/ThemeContext";
 
-import { AppBar, Grid, makeStyles } from "@material-ui/core";
+import { AppBar, Grid, makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     ...theme.mixins.toolbar,
-   
   },
 
   appBar: {
     backgroundColor: theme.palette.primary.main,
     height: "3.5em",
   },
+
+  service: {
+    color: "#ffff",
+    maxWidth: "250px",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
 }));
 
-function Header() {
+function Header(props) {
   // const { theme, setTheme } = useTheme();
 
   const classes = useStyles();
@@ -25,13 +31,13 @@ function Header() {
     <>
       <div className={classes.toolbar}></div>
       <AppBar className={classes.appBar}>
-        <Grid justify="space-between" container>
-          <Grid item></Grid>
-          <Grid item>
-            {/* <IconButton onClick={() => setTheme(theme ? false : true)}>
-              <Brightness4 />
-            </IconButton> */}
-          </Grid>
+        <Grid
+          textJustify="center"
+          justify="center"
+          container
+          alignItems="center"
+        >
+          <Typography className={classes.service}>{props.service}</Typography>
         </Grid>
       </AppBar>
     </>

@@ -211,7 +211,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 //=========================MAIN FUNCION=====================================
-export default function LandScape() {
+export default function LandScape(props) {
   //=====================Variables==========================================
   const classes = useStyles();
 
@@ -326,7 +326,7 @@ export default function LandScape() {
                         : ""}{" "}
                     KM
                   </Typography>
-                    <Typography className={classes.ditanceBellow}>
+                    <Typography >
                       Distância
                   </Typography>
                   </Grid>
@@ -416,6 +416,7 @@ export default function LandScape() {
                   onClick={(e) => {
                     handleSearchLocationByService(e, service._id);
                     setOpenServiceDialog(false);
+                    props.getService(service.name)
                   }}
                 >
                   <ListItemText>{service.name}</ListItemText>
