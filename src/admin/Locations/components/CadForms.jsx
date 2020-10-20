@@ -1,5 +1,4 @@
 // Aqui eu to usando sempre Props... Mas o interesante [e usar Contex API]
-
 import React, { useState } from "react";
 
 import Paper from "@material-ui/core/Paper";
@@ -14,7 +13,6 @@ import Tab from "@material-ui/core/Tab";
 
 import Update from "@material-ui/icons/Update";
 import Add from "@material-ui/icons/Add";
-
 // import { getAllServices } from "../../../apiCalls/apiCalls";
 
 import CadLocation from "./UpdateLocation";

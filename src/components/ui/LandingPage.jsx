@@ -233,8 +233,6 @@ export default function LandScape(props) {
     openInfo,
   } = useServiceDialog();
 
-  console.log({ latlng });
-
   // GET Nearst Location by Service
   useEffect(() => {
     //getting location   ---- GOTTA BE IN USEEFFECT AND USING STATE ---> https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
@@ -447,7 +445,7 @@ export default function LandScape(props) {
       <Typography variant="body2">
         &ensp;O Meu Serviço foi criado para facilitar a vida do cidadão quando
         precisar encontrar algum serviço realizado por alguma unidade de
-        atendimento ao público, como Descomplca SP, Poupa Tempo, Cartórios,
+        atendimento ao público, como Descomplica SP, Poupa Tempo, Cartórios,
         Bancos, INSS etc.
       </Typography>
       <br />
