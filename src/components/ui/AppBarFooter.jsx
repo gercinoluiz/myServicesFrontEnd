@@ -75,6 +75,7 @@ export default function AppBarFooter() {
               setValue(newValue);
             }}
             className={classes.BottomNavigation}
+            showLabels
           >
             <BottomNavigationAction
               label="Info."
@@ -102,7 +103,6 @@ export default function AppBarFooter() {
           </BottomNavigation>
         </Grid>
       </AppBar>
-
     </div>
   );
 }
