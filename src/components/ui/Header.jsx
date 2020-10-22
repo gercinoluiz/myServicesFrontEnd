@@ -12,6 +12,8 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: theme.palette.primary.main,
     height: "3.5em",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   service: {
@@ -20,6 +22,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     fontWeight: "bold",
   },
+
+  gridService: {
+    width: "100%",
+  },
+
+
 }));
 
 function Header(props) {
@@ -32,12 +40,15 @@ function Header(props) {
       <div className={classes.toolbar}></div>
       <AppBar className={classes.appBar}>
         <Grid
-          textJustify="center"
+          className={classes.gridService}
           justify="center"
           container
           alignItems="center"
+          textJustify="center"
         >
-          <Typography className={classes.service}>{props.service}</Typography>
+          <Typography className={classes.service}>
+            {props.service ? props.service.name : null}
+          </Typography>
         </Grid>
       </AppBar>
     </>

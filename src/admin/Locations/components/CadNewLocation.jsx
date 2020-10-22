@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
   txtName: {
     width: "35em",
     margin: "0.5em",
-
   },
 
   txtCep: {
@@ -251,7 +250,7 @@ export default function CadLocation(props) {
             />
           </Grid>
         </Grid>
-     
+
         <Grid item>
           <Grid item container justify="flex-end">
             <Button

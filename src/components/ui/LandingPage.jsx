@@ -19,6 +19,7 @@ import {
   Typography,
   makeStyles,
   List,
+  Button,
 } from "@material-ui/core";
 
 // import sp from "../../images/sp.png";
@@ -35,12 +36,14 @@ import IconButton from "@material-ui/core/IconButton";
 import Slide from "@material-ui/core/Slide";
 import InputBase from "@material-ui/core/InputBase";
 import Paper from "@material-ui/core/Paper";
+import Modal from "@material-ui/core/Modal";
 
 // import { useTheme } from "@material-ui/core";
 
 // import DateRange from "@material-ui/icons/DateRange";
 // import Room from "@material-ui/icons/Room";
 import CloseIcon from "@material-ui/icons/Close";
+import Person from "@material-ui/icons/Person";
 
 // import MenuBook from "@material-ui/icons/MenuBook";
 // import Info from "@material-ui/icons/Info";
@@ -61,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 
   Card: {
     width: "23em",
-    height: "9em",
+
     marginTop: "0.5em",
 
     [theme.breakpoints.up("lg")]: {
@@ -202,6 +205,51 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: "bold",
     },
   },
+
+  serviceModal: {
+    position: "absolute",
+    display: "flex",
+    width: "80%",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  serviceModalGrid: {
+    width: "80%",
+    margin: "3px",
+  },
+  serviceModalTypography: {
+    color: theme.palette.primary.contrastText,
+    textAlign: "center",
+  },
+
+  serviceModalButton: {
+    width: "55%",
+    backgroundColor: theme.palette.primary.main,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  servicoOnlineTypograph: {
+    color: "#1BCA9B",
+    fontSize: "15px",
+    marginRight: "3px",
+  },
+
+  schedule: {
+    color: theme.palette.primary.main,
+    fontSize: "13px",
+    fontWeight: "bold",
+    padding: "5px",
+  },
+
+  gridSite: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: "16px",
+    marginTop: "10px",
+  },
 }));
 
 //**Stil Study it  */
@@ -223,6 +271,7 @@ export default function LandScape(props) {
   const [services, setServices] = useState([]);
   const [filteredServices, setFilteredServices] = useState([]);
   const [latlng, setLatlng] = useState("");
+  const [openServiceModal, setOpenServiceModal] = useState(false);
 
   //Context
 
@@ -291,15 +340,16 @@ export default function LandScape(props) {
 
   // =================================Components=======================================
 
-  console.log({ locations })
-
   const locationsCards = locations.map((location, index) => {
     return (
       <div key={index}>
-        <a key={index}
-          style={{ textDecoration: 'none' }}
+        <a
+          key={index}
+          style={{ textDecoration: "none" }}
           rel="noopener noreferrer"
-          href={`https://www.google.com/maps/dir/?api=1&origin=${latlng}&destination=${location.location.coordinates[0]}, ${location.location.coordinates[1]}`}>
+          target="_blank"
+          href={`https://www.google.com/maps/dir/?api=1&origin=${latlng}&destination=${location.location.coordinates[0]}, ${location.location.coordinates[1]}`}
+        >
           <Card className={classes.Card}>
             <CardContent>
               <Grid container justify="space-around">
@@ -313,19 +363,15 @@ export default function LandScape(props) {
                     </Typography>
                   </Grid>
                 </Grid>
-
-
                 <Grid item>
                   <Grid item className={classes.gridDistance}>
                     <Typography className={classes.distance}>
                       {location.distance
                         ? location.distance.toString().substring(0, 2)
                         : ""}{" "}
-                    KM
-                  </Typography>
-                    <Typography >
-                      Distância
-                  </Typography>
+                      KM
+                    </Typography>
+                    <Typography>Distância</Typography>
                   </Grid>
                 </Grid>
                 <Grid
@@ -335,18 +381,32 @@ export default function LandScape(props) {
                 >
                   <Typography className={classes.warning}>
                     * Verifique a política de agendamento da unidade no site.
-                </Typography>
-
+                  </Typography>
                   <Typography className={classes.warning}>
-                    * Clique para mais detalhes.
-                </Typography>
+                    * Clique para mais abrir o mapa.
+                  </Typography>
                 </Grid>
+
+                {location.webSite ? (
+                  <Grid className={classes.gridSite}>
+                    <Typography className={classes.schedule}>
+                      <a
+                        style={{ textDecoration: "none", color: "#fff" }}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href={location.webSite}
+                      >
+                        {" "}
+                        Abrir site de agendamento{" "}
+                      </a>
+                    </Typography>{" "}
+                  </Grid>
+                ) : null}
               </Grid>
             </CardContent>
           </Card>
         </a>
       </div>
-
     );
   });
 
@@ -395,9 +455,21 @@ export default function LandScape(props) {
                     handleSearchLocationByService(e, service._id);
                     setOpenServiceDialog(false);
                     setFilteredServices([]);
+                    props.getService(service);
+                    if (service.isOnline) {
+                      setOpenServiceModal(true);
+                    }
                   }}
                 >
                   <ListItemText>{service.name}</ListItemText>
+                  {service.isOnline ? (
+                    <>
+                      <Typography className={classes.servicoOnlineTypograph}>
+                        Serviço Online{" "}
+                      </Typography>
+                      <Person style={{ color: "#1BCA9B" }} />
+                    </>
+                  ) : null}
                 </ListItem>
                 <Divider />
               </div>
@@ -413,18 +485,30 @@ export default function LandScape(props) {
                   onClick={(e) => {
                     handleSearchLocationByService(e, service._id);
                     setOpenServiceDialog(false);
-                    props.getService(service.name)
+                    props.getService(service);
+
+                    if (service.isOnline) {
+                      setOpenServiceModal(true);
+                    }
                   }}
                 >
                   <ListItemText>{service.name}</ListItemText>
+                  {service.isOnline ? (
+                    <>
+                      <Typography className={classes.servicoOnlineTypograph}>
+                        Serviço Online{" "}
+                      </Typography>
+                      <Person style={{ color: "#1BCA9B" }} />
+                    </>
+                  ) : null}
                 </ListItem>
                 <Divider />
               </div>
             );
           })
         ) : (
-              <h1>Waiting</h1>
-            )}
+          <h1>Waiting</h1>
+        )}
       </List>
     </Dialog>
   );
@@ -458,6 +542,44 @@ export default function LandScape(props) {
     </Grid>
   );
 
+  const serviceModal = (
+    <Modal
+      disableAutoFocus
+      open={openServiceModal}
+      onClose={() => setOpenServiceModal(false)}
+      disableEnforceFocus
+    >
+      <Paper className={classes.serviceModal}>
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          direction="column"
+          className={classes.serviceModalGrid}
+        >
+          <Typography className={classes.serviceModalTypography}>
+            O serviço escolhido pode ser realizado de forma{" "}
+          </Typography>
+          <Typography style={{ color: "#1BCA9B", fontWeight: "bold" }}>
+            {" "}
+            Online{" "}
+          </Typography>
+          <Typography style={{ fontSize: "12px", textAlign: "center" }}>
+            Tente realizá-lo de forma online antes de ir a uma unidade de
+            atendimento.
+          </Typography>
+
+          <Button
+            onClick={() => setOpenServiceModal(false)}
+            className={classes.serviceModalButton}
+          >
+            OK
+          </Button>
+        </Grid>
+      </Paper>
+    </Modal>
+  );
+
   return (
     <div>
       <Grid className={classes.mainGrid}>
@@ -465,6 +587,7 @@ export default function LandScape(props) {
       </Grid>
 
       {serviceDialog}
+      {serviceModal}
     </div>
   );
 }
